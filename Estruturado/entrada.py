@@ -1,20 +1,22 @@
 import math
+import re
 
 
 def ler_coeficiente(nome):
     while True:
-        valor_digitado = input(f"Digite o coeficiente {nome} (diferente de zero): ")
-        try:
-            valor = float(valor_digitado.strip().replace(",", "."))
-        except ValueError:
-            print("Entrada inválida. Digite um número.")
+        valor_digitado = input(
+            f"Digite o coeficiente {nome} (diferente de zero): "
+        ).strip()
+        if re.fullmatch(r"[0-9]+(?:[.,][0-9]+)?", valor_digitado) is None:
+            print("Entrada inválida. Digite um número inteiro ou decimal usando ponto ou vírgula.")
             continue
 
+        valor = float(valor_digitado.replace(",", "."))
         if not math.isfinite(valor):
             print("Entrada inválida. Digite um número finito.")
             continue
         if valor == 0:
-            print("O coeficiente não pode ser zero.")
+            print(f"Entrada inválida. O coeficiente {nome} não pode ser zero.")
             continue
         return valor
 
